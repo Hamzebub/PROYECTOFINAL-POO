@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package farmacia;
-
+import vista.FrmLogin;
 /**
  *
  * @author delac
@@ -14,7 +14,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        FrmLogin login = new FrmLogin();
+        login.setVisible(true);
     }
     
 }

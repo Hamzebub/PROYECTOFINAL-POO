@@ -8,14 +8,14 @@ package vista;
  *
  * @author delac
  */
-public class prueba extends javax.swing.JFrame {
+public class FrmClientes extends javax.swing.JFrame {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(prueba.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmClientes.class.getName());
 
     /**
-     * Creates new form prueba
+     * Creates new form FrmClientes
      */
-    public prueba() {
+    public FrmClientes() {
         initComponents();
     }
 
@@ -66,7 +66,7 @@ public class prueba extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new prueba().setVisible(true));
+        java.awt.EventQueue.invokeLater(() -> new FrmClientes().setVisible(true));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

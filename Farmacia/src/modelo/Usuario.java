@@ -4,21 +4,16 @@
  */
 package modelo;
 
-import java.util.ArrayList;
-
 /**
  *
  * @author delac
  */
-public class Venta {
+public class Usuario {
     
-    private String numeroVenta;
-    private Cliente cliente;
-    private double total;
-    private ArrayList<DetalleVenta> detalles;
+    private String usuario;
+    private String contrasena;
 
-    public Venta() {
-        detalles = new ArrayList<>();
+    public Usuario() {
     }
     
 }

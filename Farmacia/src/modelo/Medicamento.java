@@ -8,6 +8,22 @@ package modelo;
  *
  * @author delac
  */
-public class Medicamento {
+public class Medicamento extends Producto{
+    
+    private String laboratorio;
+    private String fechaVencimiento;
+
+    public Medicamento() {
+    }
+
+    public Medicamento(String codigo, String nombre,
+                       double precio, int stock,
+                       String laboratorio,
+                       String fechaVencimiento) {
+
+        super(codigo, nombre, precio, stock);
+        this.laboratorio = laboratorio;
+        this.fechaVencimiento = fechaVencimiento;
+    }
     
 }

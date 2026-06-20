@@ -10,4 +10,18 @@ package modelo;
  */
 public class Cliente {
     
+    private String dni;
+    private String nombre;
+    private String telefono;
+
+    public Cliente() {
+    }
+
+    public Cliente(String dni, String nombre,
+                   String telefono) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.telefono = telefono;
+    }
+    
 }

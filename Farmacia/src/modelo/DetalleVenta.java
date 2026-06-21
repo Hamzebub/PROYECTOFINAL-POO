@@ -10,11 +10,31 @@ package modelo;
  */
 public class DetalleVenta {
     
-    private Medicamento medicamento;
     private int cantidad;
     private double subtotal;
+    private double precioUnitario;
+    private Producto producto;
 
     public DetalleVenta() {
+    }
+
+    public DetalleVenta(int cantidad, Producto producto) {
+        this.cantidad = cantidad;
+        this.producto = producto;
+        this.precioUnitario = producto.getPrecio();
+        calcularSubtotal();
+    }
+
+    public void calcularSubtotal() {
+        subtotal = cantidad * precioUnitario;
+    }
+
+    public double getSubtotal() {
+        return subtotal;
+    }
+
+    public Producto getProducto() {
+        return producto;
     }
     
 }

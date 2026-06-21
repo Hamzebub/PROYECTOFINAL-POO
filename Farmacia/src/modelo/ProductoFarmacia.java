@@ -8,6 +8,50 @@ package modelo;
  *
  * @author delac
  */
-public class ProductoFarmacia {
-    
+public class ProductoFarmacia extends Producto implements Inventariable {
+
+    private String categoria;
+    private String marca;
+
+    public ProductoFarmacia() {
+    }
+
+    public ProductoFarmacia(String categoria, String marca,
+            String codigo, String nombre, double precio, int stock) {
+
+        super(codigo, nombre, precio, stock);
+        this.categoria = categoria;
+        this.marca = marca;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
+    }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public void setMarca(String marca) {
+        this.marca = marca;
+    }
+
+    @Override
+    public void mostrarInfo() {
+        System.out.println(nombre + " - " + marca);
+    }
+
+    @Override
+    public void actualizarStock(int cantidad) {
+        stock += cantidad;
+    }
+
+    @Override
+    public int obtenerStock() {
+        return stock;
+    }
 }

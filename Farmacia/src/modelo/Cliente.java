@@ -8,20 +8,30 @@ package modelo;
  *
  * @author delac
  */
-public class Cliente {
-    
-    private String dni;
-    private String nombre;
-    private String telefono;
+public class Cliente extends Persona {
+
+    private int puntosAcumulados;
 
     public Cliente() {
     }
 
-    public Cliente(String dni, String nombre,
-                   String telefono) {
-        this.dni = dni;
-        this.nombre = nombre;
-        this.telefono = telefono;
+    public Cliente(int puntosAcumulados,
+            String dni, String nombre, String telefono) {
+
+        super(dni, nombre, telefono);
+        this.puntosAcumulados = puntosAcumulados;
     }
-    
+
+    public int getPuntosAcumulados() {
+        return puntosAcumulados;
+    }
+
+    public void sumarPuntos(int puntos) {
+        puntosAcumulados += puntos;
+    }
+
+    @Override
+    public void mostrarInfo() {
+        System.out.println(nombre);
+    }
 }

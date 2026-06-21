@@ -13,12 +13,54 @@ import java.util.ArrayList;
 public class Venta {
     
     private String numeroVenta;
-    private Cliente cliente;
+    private String fecha;
     private double total;
+
+    private Cliente cliente;
+    private Usuario usuario;
+
     private ArrayList<DetalleVenta> detalles;
 
     public Venta() {
         detalles = new ArrayList<>();
+    }
+
+    public Venta(String numeroVenta,
+                 String fecha,
+                 Cliente cliente,
+                 Usuario usuario) {
+
+        this.numeroVenta = numeroVenta;
+        this.fecha = fecha;
+        this.cliente = cliente;
+        this.usuario = usuario;
+
+        detalles = new ArrayList<>();
+    }
+
+    public void agregarDetalle(DetalleVenta detalle) {
+        detalles.add(detalle);
+    }
+
+    public void calcularTotal() {
+
+        total = 0;
+
+        for (DetalleVenta d : detalles) {
+            total += d.getSubtotal();
+        }
+    }
+
+    public void registrarVenta() {
+        calcularTotal();
+    }
+
+    public double getTotal() {
+        return total;
+    }
+
+    public ArrayList<DetalleVenta> getDetalles() {
+        return detalles;
     }
     
 }

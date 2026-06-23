@@ -16,10 +16,10 @@ public class ProductoFarmacia extends Producto implements Inventariable {
     public ProductoFarmacia() {
     }
 
-    public ProductoFarmacia(String categoria, String marca,
-            String codigo, String nombre, double precio, int stock) {
+    public ProductoFarmacia(String categoria, String marca,String codigo, 
+            String nombre, double precio, int stock, String fechaVencimiento) {
 
-        super(codigo, nombre, precio, stock);
+        super(codigo, nombre, precio, stock, fechaVencimiento);
         this.categoria = categoria;
         this.marca = marca;
     }

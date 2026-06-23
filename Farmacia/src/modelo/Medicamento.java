@@ -11,17 +11,17 @@ package modelo;
 public class Medicamento extends Producto implements Inventariable {
 
     private String laboratorio;
-    private String fechaVencimiento;
+    //private String fechaVencimiento;
 
     public Medicamento() {
     }
 
-    public Medicamento(String laboratorio, String fechaVencimiento,
-            String codigo, String nombre, double precio, int stock) {
+    public Medicamento(String laboratorio,String codigo,
+            String nombre, double precio, int stock, String fechaVencimiento) {
 
-        super(codigo, nombre, precio, stock);
+        super(codigo, nombre, precio, stock, fechaVencimiento);
         this.laboratorio = laboratorio;
-        this.fechaVencimiento = fechaVencimiento;
+        //this.fechaVencimiento = fechaVencimiento;
     }
 
     public String getLaboratorio() {
@@ -32,13 +32,13 @@ public class Medicamento extends Producto implements Inventariable {
         this.laboratorio = laboratorio;
     }
 
-    public String getFechaVencimiento() {
+    /*public String getFechaVencimiento() {
         return fechaVencimiento;
     }
 
     public void setFechaVencimiento(String fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
-    }
+    }*/
 
     @Override
     public void mostrarInfo() {

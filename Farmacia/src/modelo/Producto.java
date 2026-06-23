@@ -14,15 +14,17 @@ public abstract class Producto {
     protected String nombre;
     protected double precio;
     protected int stock;
+    protected String fechaVencimiento;
 
     public Producto() {
     }
 
-    public Producto(String codigo, String nombre, double precio, int stock) {
+    public Producto(String codigo, String nombre, double precio, int stock,String fechaVencimiento) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     public String getCodigo() {
@@ -55,6 +57,14 @@ public abstract class Producto {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+    
+    public String getFechaVencimiento() {
+        return fechaVencimiento;
+    }
+
+    public void setFechaVencimiento(String fechaVencimiento) {
+        this.fechaVencimiento = fechaVencimiento;
     }
 
     public abstract void mostrarInfo();

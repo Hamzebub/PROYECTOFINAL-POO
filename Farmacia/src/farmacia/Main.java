@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package farmacia;
-import vista.FrmLogin;
+import presentacion.FrmLogin;
 /**
  *
  * @author delac

@@ -1,0 +1,37 @@
+# =========================
+# NetBeans (Ant project)
+# =========================
+nbproject/private/
+
+# =========================
+# Build outputs (Ant genera esto)
+# =========================
+build/
+dist/
+
+# =========================
+# Compilados Java
+# =========================
+*.class
+
+# =========================
+# Logs / temporales
+# =========================
+*.log
+*.tmp
+
+# =========================
+# Sistema operativo
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE / backups
+# =========================
+*.bak
+*~
+
+
+# configuración local
+**/db.properties

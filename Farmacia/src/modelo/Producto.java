@@ -1,30 +1,42 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package modelo;
 
 /**
  *
  * @author delac
  */
-public abstract class Producto {
+public class Producto {
     
-    protected String codigo;
-    protected String nombre;
-    protected double precio;
-    protected int stock;
-    protected String fechaVencimiento;
+    private int producto_Id;
+    private String codigo;
+    private String nombre;
+    private double precio;
+    private int stock;
+    private String fechaVencimiento;
+    private Laboratorio laboratorio;
+    private Marca marca;
+    private Categoria categoria;
 
     public Producto() {
     }
 
-    public Producto(String codigo, String nombre, double precio, int stock,String fechaVencimiento) {
+    public Producto(int producto_Id, String codigo, String nombre, double precio, int stock, String fechaVencimiento, Laboratorio laboratorio, Marca marca, Categoria categoria) {
+        this.producto_Id = producto_Id;
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
         this.fechaVencimiento = fechaVencimiento;
+        this.laboratorio = laboratorio;
+        this.marca = marca;
+        this.categoria = categoria;
+    }
+
+    public int getProducto_Id() {
+        return producto_Id;
+    }
+
+    public void setProducto_Id(int producto_Id) {
+        this.producto_Id = producto_Id;
     }
 
     public String getCodigo() {
@@ -58,7 +70,7 @@ public abstract class Producto {
     public void setStock(int stock) {
         this.stock = stock;
     }
-    
+
     public String getFechaVencimiento() {
         return fechaVencimiento;
     }
@@ -67,6 +79,35 @@ public abstract class Producto {
         this.fechaVencimiento = fechaVencimiento;
     }
 
-    public abstract void mostrarInfo();
+    public Laboratorio getLaboratorio() {
+        return laboratorio;
+    }
+
+    public void setLaboratorio(Laboratorio laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
+    public Marca getMarca() {
+        return marca;
+    }
+
+    public void setMarca(Marca marca) {
+        this.marca = marca;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+    
+    
+    
+    
+    
+    
+
     
 }

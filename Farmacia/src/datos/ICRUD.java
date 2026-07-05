@@ -6,6 +6,8 @@ import modelo.Respuesta;
 /**
  *
  * @author Migue
+ * @param <T>
+ * @param <R>
  */
 public interface ICRUD<T,R> {
     Respuesta<R> guardar(T entidad);

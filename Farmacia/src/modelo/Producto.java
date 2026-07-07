@@ -1,5 +1,7 @@
 package modelo;
 
+import java.time.LocalDate;
+
 /**
  *
  * @author delac
@@ -11,7 +13,7 @@ public class Producto {
     private String nombre;
     private double precio;
     private int stock;
-    private String fechaVencimiento;
+    private LocalDate fechaVencimiento;
     private Laboratorio laboratorio;
     private Marca marca;
     private Categoria categoria;
@@ -19,7 +21,7 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(int producto_Id, String codigo, String nombre, double precio, int stock, String fechaVencimiento, Laboratorio laboratorio, Marca marca, Categoria categoria) {
+    public Producto(int producto_Id, String codigo, String nombre, double precio, int stock, LocalDate fechaVencimiento, Laboratorio laboratorio, Marca marca, Categoria categoria) {
         this.producto_Id = producto_Id;
         this.codigo = codigo;
         this.nombre = nombre;
@@ -71,11 +73,11 @@ public class Producto {
         this.stock = stock;
     }
 
-    public String getFechaVencimiento() {
+    public LocalDate getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(String fechaVencimiento) {
+    public void setFechaVencimiento(LocalDate fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 

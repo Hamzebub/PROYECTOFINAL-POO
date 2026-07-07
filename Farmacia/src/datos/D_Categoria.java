@@ -161,7 +161,7 @@ public class D_Categoria extends RepositorioBase
             resultado.setDatos(lst);
             resultado.setEstado(EstadoOperacion.EXITO);
 
-        } catch (Exception e) {
+        } catch (SQLException e) {
 
             resultado.setEstado(EstadoOperacion.ERROR);
             resultado.setMensaje(e.getMessage());

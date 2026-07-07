@@ -28,6 +28,13 @@ public class Marca {
     public void setMarca_Detalle(String marca_Detalle) {
         this.marca_Detalle = marca_Detalle;
     }
+
+    @Override
+    public String toString() {
+        return marca_Detalle;
+    }
+    
+    
     
     
     

@@ -42,7 +42,7 @@ public class FrmLaboratorio extends javax.swing.JFrame {
     private void Guardar(){
         Laboratorio m = new Laboratorio(ID,txtLaboratorioDetalle.getText());
         Respuesta r= new Respuesta();
-        if(m.getMarca_Id()==0){
+        if(m.getLaboratorio_Id()==0){
             r = obj.guardar(m);
         }else{
             r = obj.actualizar(m);
@@ -68,8 +68,8 @@ public class FrmLaboratorio extends javax.swing.JFrame {
         lista = r.getDatos();
         for (Laboratorio m : r.getDatos()) {
             modelo.addRow(new Object[]{
-                m.getMarca_Id(),
-                m.getMarca_Detalle()
+                m.getLaboratorio_Id(),
+                m.getLaboratorio_Detalle()
             });
         }
     } else {
@@ -227,13 +227,13 @@ public class FrmLaboratorio extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         obtenerIDxTabla();
-        Laboratorio _lab = lista.stream().filter(m -> m.getMarca_Id()==ID).findFirst()
+        Laboratorio _lab = lista.stream().filter(m -> m.getLaboratorio_Id()==ID).findFirst()
         .orElse(null);
         if(_lab==null){
             JOptionPane.showMessageDialog(null, "No hay registros seleccionados");
             return;
         }
-        txtLaboratorioDetalle.setText(_lab.getMarca_Detalle());
+        txtLaboratorioDetalle.setText(_lab.getLaboratorio_Detalle());
         activarBotones(true);
     }//GEN-LAST:event_btnEditarActionPerformed
 

@@ -26,7 +26,7 @@ public class D_Laboratorio extends RepositorioBase implements ICRUD<Laboratorio,
 
             cs = cn.prepareCall("{CALL USP_Laboratorio_Guardar(?)}");
 
-            cs.setString(1, lab.getMarca_Detalle());
+            cs.setString(1, lab.getLaboratorio_Detalle());
 
             rs = cs.executeQuery();
 
@@ -67,8 +67,8 @@ public class D_Laboratorio extends RepositorioBase implements ICRUD<Laboratorio,
 
             cs = cn.prepareCall("{CALL USP_Laboratorio_Actualizar(?,?)}");
 
-            cs.setInt(1, lab.getMarca_Id());
-            cs.setString(2, lab.getMarca_Detalle());
+            cs.setInt(1, lab.getLaboratorio_Id());
+            cs.setString(2, lab.getLaboratorio_Detalle());
 
             rs = cs.executeQuery();
 

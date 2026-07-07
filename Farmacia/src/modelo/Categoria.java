@@ -28,6 +28,11 @@ public class Categoria {
         this.categoria_Detalle = categoria_Detalle;
     }
     
+    @Override
+    public String toString() {
+        return categoria_Detalle;
+    }
+    
     
     
 }

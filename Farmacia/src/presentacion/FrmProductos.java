@@ -23,7 +23,7 @@ import util.cboUtil;
  *
  * @author delac
  */
-public class FrmProductos extends javax.swing.JFrame {
+public class FrmProductos extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmProductos.class.getName());
     
@@ -39,7 +39,7 @@ public class FrmProductos extends javax.swing.JFrame {
 
     public FrmProductos() {
         initComponents();
-        setLocationRelativeTo(null);
+        
         activarBotones(false);
         obj = new L_Producto();
         _marca= new L_Marca();
@@ -54,6 +54,10 @@ public class FrmProductos extends javax.swing.JFrame {
         cboUtil.llenarCombo(cboMarca, listaMarca);
         cboUtil.llenarCombo(cboCategoria, listaCategoria);
         cboUtil.llenarCombo(cboLaboratorio, listaLaboratorio);
+        setClosable(true);      // Permite cerrar
+    setIconifiable(true);   // Minimizar
+    setMaximizable(true);   // Maximizar
+    setResizable(true);     // Redimensionar
     }
     
     void cargarModeloTabla(){modelo= new DefaultTableModel();
@@ -220,13 +224,6 @@ public class FrmProductos extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         cboMarca = new javax.swing.JComboBox<>();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                formWindowOpened(evt);
-            }
-        });
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -457,34 +454,10 @@ public class FrmProductos extends javax.swing.JFrame {
         LimpiarCampos(null);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        
-    }//GEN-LAST:event_formWindowOpened
-
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmProductos().setVisible(true));
-    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

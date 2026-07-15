@@ -10,7 +10,7 @@ public class L_TipoDocumento {
     private List<TipoDocumento> lista;
     
     private L_TipoDocumento(){
-    
+        cargarListar();
     }
     
     public static L_TipoDocumento getInstancia() {

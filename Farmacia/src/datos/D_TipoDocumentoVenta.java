@@ -2,7 +2,7 @@ package datos;
 
 import java.util.List;
 import modelo.Respuesta;
-import modelo.TipoDocumento;
+import modelo.TipoDocumentoVenta;
 import java.sql.*;
 import java.util.ArrayList;
 import modelo.EstadoOperacion;
@@ -11,10 +11,9 @@ import modelo.EstadoOperacion;
  *
  * @author Migue
  */
-public class D_TipoDocumento extends RepositorioBase {
-    
-    public Respuesta<List<TipoDocumento>> listar() {
-        Respuesta<List<TipoDocumento>> resultado = new Respuesta<>();
+public class D_TipoDocumentoVenta extends RepositorioBase{
+    public Respuesta<List<TipoDocumentoVenta>> listar() {
+        Respuesta<List<TipoDocumentoVenta>> resultado = new Respuesta<>();
 
         Connection cn = null;
         CallableStatement cs = null;
@@ -24,17 +23,17 @@ public class D_TipoDocumento extends RepositorioBase {
 
             cn = getConexion();
 
-            cs = cn.prepareCall("{CALL USP_TipoDocumento_Listar()}");
+            cs = cn.prepareCall("{CALL USP_TipoDocumentoVenta_Listar()}");
 
             rs = cs.executeQuery();
-            List<TipoDocumento> lst = new ArrayList<>();
+            List<TipoDocumentoVenta> lst = new ArrayList<>();
             while(rs.next()) {
 
-                lst.add(new TipoDocumento(
-                        rs.getInt("TipoDocumento_Id"),
-                        rs.getString("DocumentoDetalle"),
-                        rs.getString("Abreviatura"),
-                        rs.getInt("Defecto")
+                lst.add(new TipoDocumentoVenta(
+                        rs.getInt("TipoDocumentoVenta_Id"),
+                        rs.getString("DocumentoVenta"),
+                        rs.getString("Indicador")
+                        
                 ));
             }
             

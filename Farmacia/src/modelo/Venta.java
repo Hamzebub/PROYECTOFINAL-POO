@@ -4,6 +4,8 @@
  */
 package modelo;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
@@ -11,56 +13,14 @@ import java.util.ArrayList;
  * @author delac
  */
 public class Venta {
+    private int venta_Id;
+    private String serie;
+    private int correlativo;
+    private LocalDate fechaCompleta;
+    private TipoDocumentoVenta tipoDocumentoVenta;
+    private BigDecimal total;
     
-    private String numeroVenta;
-    private String fecha;
-    private double total;
 
-    private Cliente cliente;
-    private Usuario usuario;
 
-    private ArrayList<DetalleVenta> detalles;
-
-    public Venta() {
-        detalles = new ArrayList<>();
-    }
-
-    public Venta(String numeroVenta,
-                 String fecha,
-                 Cliente cliente,
-                 Usuario usuario) {
-
-        this.numeroVenta = numeroVenta;
-        this.fecha = fecha;
-        this.cliente = cliente;
-        this.usuario = usuario;
-
-        detalles = new ArrayList<>();
-    }
-
-    public void agregarDetalle(DetalleVenta detalle) {
-        detalles.add(detalle);
-    }
-
-    public void calcularTotal() {
-
-        total = 0;
-
-        for (DetalleVenta d : detalles) {
-            total += d.getSubtotal();
-        }
-    }
-
-    public void registrarVenta() {
-        calcularTotal();
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public ArrayList<DetalleVenta> getDetalles() {
-        return detalles;
-    }
     
 }

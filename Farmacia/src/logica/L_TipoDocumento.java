@@ -16,6 +16,7 @@ public class L_TipoDocumento {
     public static L_TipoDocumento getInstancia() {
         if (obj == null) {
             obj = new L_TipoDocumento();
+            obj.cargarListar();
         }
         return obj;
     }
@@ -31,6 +32,9 @@ public class L_TipoDocumento {
     }
     
     public List<TipoDocumento> obtenerListar(){
+        if (lista == null) {
+            cargarListar();
+        }
         return lista;
     }
     

@@ -41,7 +41,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        jmnClientes = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
+        jmnCategoria = new javax.swing.JMenuItem();
+        jmnLaboratorio = new javax.swing.JMenuItem();
+        jmnMarcas = new javax.swing.JMenuItem();
         jmnProductos = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jmnVenta = new javax.swing.JMenuItem();
@@ -62,10 +66,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jMenu1.setText("Usuarios");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Empleado");
+        jMenu2.setText("Clientes");
+
+        jmnClientes.setText("Clientes");
+        jmnClientes.addActionListener(this::jmnClientesActionPerformed);
+        jMenu2.add(jmnClientes);
+
         jMenuBar1.add(jMenu2);
 
-        jMenu4.setText("Productos");
+        jMenu4.setText("Mantenimiento");
+
+        jmnCategoria.setText("Categoria");
+        jmnCategoria.addActionListener(this::jmnCategoriaActionPerformed);
+        jMenu4.add(jmnCategoria);
+
+        jmnLaboratorio.setText("Laboratorio");
+        jmnLaboratorio.addActionListener(this::jmnLaboratorioActionPerformed);
+        jMenu4.add(jmnLaboratorio);
+
+        jmnMarcas.setText("Marcas");
+        jmnMarcas.addActionListener(this::jmnMarcasActionPerformed);
+        jMenu4.add(jmnMarcas);
 
         jmnProductos.setText("Productos");
         jmnProductos.addActionListener(this::jmnProductosActionPerformed);
@@ -107,6 +128,22 @@ public class FrmPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jmnProductosActionPerformed
 
+    private void jmnMarcasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnMarcasActionPerformed
+        AbrirFrm(new FrmMarca());
+    }//GEN-LAST:event_jmnMarcasActionPerformed
+
+    private void jmnCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnCategoriaActionPerformed
+        AbrirFrm(new FrmCategoria());
+    }//GEN-LAST:event_jmnCategoriaActionPerformed
+
+    private void jmnLaboratorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnLaboratorioActionPerformed
+        AbrirFrm(new FrmLaboratorio());
+    }//GEN-LAST:event_jmnLaboratorioActionPerformed
+
+    private void jmnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnClientesActionPerformed
+        AbrirFrm(new FrmClientes());
+    }//GEN-LAST:event_jmnClientesActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -139,6 +176,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JDesktopPane jdpMain;
+    private javax.swing.JMenuItem jmnCategoria;
+    private javax.swing.JMenuItem jmnClientes;
+    private javax.swing.JMenuItem jmnLaboratorio;
+    private javax.swing.JMenuItem jmnMarcas;
     private javax.swing.JMenuItem jmnProductos;
     private javax.swing.JMenuItem jmnVenta;
     // End of variables declaration//GEN-END:variables

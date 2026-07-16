@@ -17,7 +17,7 @@ import modelo.Respuesta;
  *
  * @author delac
  */
-public class FrmLaboratorio extends javax.swing.JFrame {
+public class FrmLaboratorio extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmLaboratorio.class.getName());
     private L_Laboratorio obj;
@@ -28,7 +28,7 @@ public class FrmLaboratorio extends javax.swing.JFrame {
     public FrmLaboratorio() {
         initComponents();
         obj = new L_Laboratorio();
-        setLocationRelativeTo(null);
+        
         modelo= new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("Laboratorio");
@@ -37,6 +37,10 @@ public class FrmLaboratorio extends javax.swing.JFrame {
         modelo.setRowCount(0); 
         cargarTabla();
         activarBotones(false);
+        setClosable(true);      // Permite cerrar
+        setIconifiable(true);   // Minimizar
+        setMaximizable(true);   // Maximizar
+        setResizable(true);
     }
     
     private void Guardar(){
@@ -107,7 +111,8 @@ public class FrmLaboratorio extends javax.swing.JFrame {
         btnNuevo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Laboratorio");
+        setToolTipText("");
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -191,8 +196,6 @@ public class FrmLaboratorio extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel1.getAccessibleContext().setAccessibleName("Laboratorio:");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -266,30 +269,6 @@ public class FrmLaboratorio extends javax.swing.JFrame {
         txtLaboratorioDetalle.setText("");
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmLaboratorio().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

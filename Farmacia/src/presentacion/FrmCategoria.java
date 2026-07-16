@@ -10,7 +10,7 @@ import modelo.EstadoOperacion;
 import modelo.Respuesta;
 
 
-public class FrmCategoria extends javax.swing.JFrame {
+public class FrmCategoria extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmCategoria.class.getName());
     private L_Categoria obj;
@@ -21,7 +21,6 @@ public class FrmCategoria extends javax.swing.JFrame {
     public FrmCategoria() {
         initComponents();
         obj = new L_Categoria();
-        setLocationRelativeTo(null);
         modelo= new DefaultTableModel();
         modelo.addColumn("ID");
         modelo.addColumn("Categoria");
@@ -30,6 +29,10 @@ public class FrmCategoria extends javax.swing.JFrame {
         modelo.setRowCount(0); 
         cargarTabla();
         activarBotones(false);
+        setClosable(true);      // Permite cerrar
+        setIconifiable(true);   // Minimizar
+        setMaximizable(true);   // Maximizar
+        setResizable(true);
     }
     
     private void Guardar(){
@@ -105,7 +108,7 @@ public class FrmCategoria extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDatos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Categoria");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanel1.setToolTipText("");
@@ -192,7 +195,7 @@ public class FrmCategoria extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 486, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(25, 25, 25))
         );
@@ -258,30 +261,6 @@ public class FrmCategoria extends javax.swing.JFrame {
         txtCategoriaDetalle.setText("");
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new FrmCategoria().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;

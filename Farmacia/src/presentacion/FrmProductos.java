@@ -225,6 +225,9 @@ public class FrmProductos extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         cboMarca = new javax.swing.JComboBox<>();
 
+        setTitle("Productos");
+        setToolTipText("");
+
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},

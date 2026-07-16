@@ -1,6 +1,14 @@
 package presentacion;
 
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import logica.L_Venta;
+import modelo.EstadoOperacion;
+import modelo.Respuesta;
+import modelo.Venta;
 
 /**
  *
@@ -10,15 +18,71 @@ public class FrmVentas extends javax.swing.JInternalFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmVentas.class.getName());
     private JDesktopPane jdpMain;
-    
+    private L_Venta obj;
+    private DefaultTableModel modelo;
+    private List<Venta> lista= new ArrayList<Venta>();
+    private List<Venta> listaFiltro= new ArrayList<Venta>();
 
     public FrmVentas(JDesktopPane pane) {
         initComponents();
         this.jdpMain= pane;
+        obj = new L_Venta();
+        cargarModeloTabla();
+        cargarTablaProductos();
         setClosable(true);      // Permite cerrar
     setIconifiable(true);   // Minimizar
     setMaximizable(true);   // Maximizar
     setResizable(true);     // Redimensionar
+    }
+    
+    void cargarModeloTabla(){modelo= new DefaultTableModel();
+        modelo.addColumn("Venta_Id");
+        modelo.addColumn("Serie");
+        modelo.addColumn("Correlativo");
+        modelo.addColumn("Fecha Completa");
+        modelo.addColumn("Documento");
+        modelo.addColumn("Cliente");
+        modelo.addColumn("Total");
+        modelo.addColumn("Estado");
+        
+        
+        tblDatos.setModel(modelo);
+        modelo.setRowCount(0); 
+        
+    }
+    
+    private void cargarTablaProductos() {
+    Respuesta<List<Venta>> r = obj.listar();
+    
+    
+    if (r.getEstado() == EstadoOperacion.EXITO) {
+        lista = r.getDatos();
+        listaFiltro=lista;
+        cargarDatosModeloVenta();
+    } else {
+        JOptionPane.showMessageDialog(this, r.getMensaje());
+    }
+    }
+    
+    void cargarDatosModeloVenta(){
+        modelo.setRowCount(0);
+        
+        for (Venta m : listaFiltro) {
+            modelo.addRow(new Object[]{
+                m.getVenta_Id(),
+                m.getSerie(),
+                m.getCorrelativo(),
+                m.getFechaCompleta(),
+                m.getTipoDocumentoVenta().getDocumentoVenta(),
+                m.getCliente().getNombre(),
+                m.getTotal(),
+                m.getEstadoVenta().getDescripcion()                   
+            });
+        }
+    }
+    
+    public void Listar(){
+        cargarTablaProductos();
     }
 
     /**
@@ -77,12 +141,14 @@ public class FrmVentas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        FrmVentaGenerar frm = new FrmVentaGenerar(null);
+        FrmVentaGenerar frm = new FrmVentaGenerar(null,this);
         jdpMain.add(frm);
-        frm.setVisible(true);
         frm.setLocation(
         (jdpMain.getWidth() - frm.getWidth()) / 2,
         (jdpMain.getHeight() - frm.getHeight()) / 2);
+        frm.setVisible(true);
+        
+        
         
     }//GEN-LAST:event_btnNuevoActionPerformed
 

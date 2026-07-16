@@ -3,6 +3,15 @@ package modelo;
 public class Respuesta<T> {
     private EstadoOperacion estado;
     private String mensaje;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     private T datos;
     
     public Respuesta() {
@@ -18,6 +27,15 @@ public class Respuesta<T> {
         this.mensaje = mensaje;
         this.datos = datos;
     }
+
+    public Respuesta(EstadoOperacion estado, String mensaje, int id, T datos) {
+        this.estado = estado;
+        this.mensaje = mensaje;
+        this.id = id;
+        this.datos = datos;
+    }
+    
+    
 
     public EstadoOperacion getEstado() {
         return estado;

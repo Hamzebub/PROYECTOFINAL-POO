@@ -10,7 +10,6 @@ package modelo;
  */
 public class Usuario extends Persona {
     private int usuario_id;
-    private TipoDocumento tipoDocumento;
     private String usuario;
     private String contrasena;
     private String rol;

@@ -10,6 +10,7 @@ package modelo;
  */
 public abstract class Persona {
     
+    protected TipoDocumento tipoDocumento;
     protected String dni;
     protected String nombre;
     protected String telefono;
@@ -47,7 +48,13 @@ public abstract class Persona {
         this.telefono = telefono;
     }
     
-    
+    public TipoDocumento getTipoDocumento() {
+        return tipoDocumento;
+    }
+
+    public void setTipoDocumento(TipoDocumento tipoDocumento) {
+        this.tipoDocumento = tipoDocumento;
+    }
 
     public abstract void mostrarInfo();
     

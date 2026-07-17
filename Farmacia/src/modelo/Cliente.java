@@ -10,7 +10,6 @@ package modelo;
  */
 public class Cliente extends Persona {
     private int Cliente_Id;
-    private TipoDocumento tipoDocumento;
     private int puntosAcumulados;
     private int activo;
 
@@ -45,14 +44,6 @@ public class Cliente extends Persona {
 
     public void setCliente_Id(int Cliente_Id) {
         this.Cliente_Id = Cliente_Id;
-    }
-    
-    public TipoDocumento getTipoDocumento() {
-        return tipoDocumento;
-    }
-
-    public void setTipoDocumento(TipoDocumento tipoDocumento) {
-        this.tipoDocumento = tipoDocumento;
     }
     
     public int getActivo() {

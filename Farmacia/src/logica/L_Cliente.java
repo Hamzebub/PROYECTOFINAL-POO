@@ -73,7 +73,7 @@ public class L_Cliente {
     
     public Respuesta<Cliente> actualizar(Cliente cliente) {
 
-        if (cliente.getCliente_Id()<= 0) {
+        if (cliente.getId()<= 0) {
             return new Respuesta<>(
                 EstadoOperacion.ERROR,
                 "ID inválido"

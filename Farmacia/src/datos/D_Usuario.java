@@ -82,7 +82,7 @@ public class D_Usuario extends RepositorioBase implements IUSUARIO {
 
             cs = cn.prepareCall("{CALL USP_Usuario_Actualizar(?,?,?,?,?,?,?,?)}");
 
-            cs.setInt(1, entidad.getUsuario_Id());
+            cs.setInt(1, entidad.getId());
             cs.setInt(2, entidad.getTipoDocumento().getTipoDocumento_Id());
             cs.setString(3, entidad.getDni());
             cs.setString(4, entidad.getNombre());

@@ -9,7 +9,6 @@ package modelo;
  * @author delac
  */
 public class Usuario extends Persona {
-    private int usuario_id;
     private String usuario;
     private String contrasena;
     private String rol;
@@ -18,11 +17,10 @@ public class Usuario extends Persona {
     public Usuario() {
     }
     
-    public Usuario(int usuario_id,TipoDocumento tipoDocumento,String usuario, String contrasena, String rol,
+    public Usuario(int id,TipoDocumento tipoDocumento,String usuario, String contrasena, String rol,
             String dni, String nombre, String telefono,int activo) {
 
-        super(dni, nombre, telefono);
-        this.usuario_id = usuario_id;
+        super(id, dni, nombre, telefono);
         this.tipoDocumento = tipoDocumento;
         this.usuario = usuario;
         this.contrasena = contrasena;
@@ -30,23 +28,13 @@ public class Usuario extends Persona {
         this.activo = activo;
     }
     
-    public Usuario(int usuario_id,TipoDocumento tipoDocumento,String usuario, String contrasena, String rol,
+    public Usuario(int id,TipoDocumento tipoDocumento,String usuario, String contrasena, String rol,
             String dni, String nombre, String telefono) {
-
-        super(dni, nombre, telefono);
-        this.usuario_id = usuario_id;
+        super(id, dni, nombre, telefono);
         this.tipoDocumento = tipoDocumento;
         this.usuario = usuario;
         this.contrasena = contrasena;
         this.rol = rol;
-    }
-    
-    public int getUsuario_Id() {
-        return usuario_id;
-    }
-
-    public void setUsuario_Id(int usuario_id) {
-        this.usuario_id = usuario_id;
     }
     
     public TipoDocumento getTipoDocumento() {

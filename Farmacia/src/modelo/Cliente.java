@@ -9,41 +9,29 @@ package modelo;
  * @author delac
  */
 public class Cliente extends Persona {
-    private int Cliente_Id;
     private int puntosAcumulados;
     private int activo;
 
-    public Cliente(int Cliente_Id,TipoDocumento tipoDocumento,int puntosAcumulados,String dni, String nombre, String telefono,int activo) {  
-        super(dni, nombre, telefono);
-        this.Cliente_Id = Cliente_Id;
+    public Cliente(int id, TipoDocumento tipoDocumento,int puntosAcumulados,String dni, String nombre, String telefono,int activo) {  
+        super(id, dni, nombre, telefono);
         this.tipoDocumento = tipoDocumento;
         this.puntosAcumulados = puntosAcumulados;
         this.activo = activo;
     }
     
-    public Cliente(int cliente_Id,String dni,String nombre,String telefono,int activo) {
-        super(dni, nombre, telefono);
-        this.Cliente_Id = cliente_Id;
+    public Cliente(int id,String dni,String nombre,String telefono,int activo) {
+        super(id, dni, nombre, telefono);
         this.activo = activo;
     }
     
-    public Cliente(int cliente_Id,TipoDocumento tipoDocumento,String dni,String nombre,String telefono) {
-        super(dni, nombre, telefono);
-        this.Cliente_Id = cliente_Id;
+    public Cliente(int id,TipoDocumento tipoDocumento,String dni,String nombre,String telefono) {
+        super(id, dni, nombre, telefono);
         this.tipoDocumento = tipoDocumento;
         this.puntosAcumulados = 0;
         this.activo = 1;
     }
     
     public Cliente() {
-    }
-    
-    public int getCliente_Id() {
-        return Cliente_Id;
-    }
-
-    public void setCliente_Id(int Cliente_Id) {
-        this.Cliente_Id = Cliente_Id;
     }
     
     public int getActivo() {

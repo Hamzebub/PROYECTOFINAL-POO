@@ -80,7 +80,7 @@ public class D_Cliente extends RepositorioBase
 
             cs = cn.prepareCall("{CALL USP_Cliente_Actualizar(?,?,?,?,?)}");
 
-            cs.setInt(1, entidad.getCliente_Id());
+            cs.setInt(1, entidad.getId());
             cs.setInt(2, entidad.getTipoDocumento().getTipoDocumento_Id());
             cs.setString(3, entidad.getDni());
             cs.setString(4, entidad.getNombre());

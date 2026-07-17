@@ -72,7 +72,7 @@ public class L_Usuario {
     
     public Respuesta<Usuario> actualizar(Usuario usuario) {
 
-        if (usuario.getUsuario_Id()<= 0) {
+        if (usuario.getId()<= 0) {
             return new Respuesta<>(
                 EstadoOperacion.ERROR,
                 "ID inválido"

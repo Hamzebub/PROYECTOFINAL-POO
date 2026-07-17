@@ -76,7 +76,7 @@ public class FrmClientes extends javax.swing.JInternalFrame {
         lista = r.getDatos();
         for (Cliente m : r.getDatos()) {
             tabla.addRow(new Object[]{
-                m.getCliente_Id(),
+                m.getId(),
                 m.getDni(),
                 m.getNombre(),
                 m.getTelefono(),
@@ -98,7 +98,7 @@ public class FrmClientes extends javax.swing.JInternalFrame {
                 
         );
         Respuesta r;
-        if(p.getCliente_Id()==0){
+        if(p.getId()==0){
             r = obj.guardar(p);
         }else{
             r = obj.actualizar(p);
@@ -338,7 +338,7 @@ public class FrmClientes extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         obtenerIDxTabla();
-        Cliente _cliente = lista.stream().filter(m -> m.getCliente_Id()==ID).findFirst().orElse(null);
+        Cliente _cliente = lista.stream().filter(m -> m.getId()==ID).findFirst().orElse(null);
         if(_cliente==null){
             JOptionPane.showMessageDialog(null, "No hay registros seleccionados");
             return;
@@ -356,7 +356,7 @@ public class FrmClientes extends javax.swing.JInternalFrame {
 
     Cliente cliente = lista.get(fila);
 
-    ID = cliente.getCliente_Id();
+    ID = cliente.getId();
 
     txtDocumento.setText(cliente.getDni());
     txtCliente.setText(cliente.getNombre());

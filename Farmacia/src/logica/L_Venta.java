@@ -27,7 +27,7 @@ public class L_Venta {
             );
         }
 
-        if (venta.getCliente().getCliente_Id()==0) {
+        if (venta.getCliente().getId()==0) {
 
             return new Respuesta<>(
                 EstadoOperacion.ERROR,
@@ -56,7 +56,7 @@ public class L_Venta {
             );
         }
         
-        if (venta.getCliente().getCliente_Id()==0) {
+        if (venta.getCliente().getId()==0) {
 
             return new Respuesta<>(
                 EstadoOperacion.ERROR,

@@ -44,7 +44,7 @@ public class D_Venta extends RepositorioBase
             cs.setObject(4, venta.getTotal());
             
             
-            cs.setInt(5, venta.getCliente().getCliente_Id());
+            cs.setInt(5, venta.getCliente().getId());
             //cs.setInt(6, venta.getUsuario().get);
             cs.setInt(6, 1);
 
@@ -100,7 +100,7 @@ public class D_Venta extends RepositorioBase
             cs.setObject(5, venta.getTotal());
             
             
-            cs.setInt(6, venta.getCliente().getCliente_Id());
+            cs.setInt(6, venta.getCliente().getId());
             //cs.setInt(6, venta.getUsuario().get);
             cs.setInt(7, 1);
 
@@ -190,7 +190,7 @@ public class D_Venta extends RepositorioBase
             List<Venta> lst = new ArrayList<>();
             while(rs.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setCliente_Id(rs.getInt("Cliente_Id"));
+                cliente.setId(rs.getInt("Cliente_Id"));
                 cliente.setNombre(rs.getString("Nombre"));
                 
                 TipoDocumentoVenta tdv = new TipoDocumentoVenta();

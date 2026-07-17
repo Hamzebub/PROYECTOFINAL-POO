@@ -10,6 +10,7 @@ package modelo;
  */
 public abstract class Persona {
     
+    protected int id;
     protected TipoDocumento tipoDocumento;
     protected String dni;
     protected String nombre;
@@ -18,12 +19,20 @@ public abstract class Persona {
     public Persona() {
     }
 
-    public Persona(String dni, String nombre, String telefono) {
+    public Persona(int id, String dni, String nombre, String telefono) {
+        this.id = id;
         this.dni = dni;
         this.nombre = nombre;
         this.telefono = telefono;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int setId(int id) {
+        return id;
+    }
     public String getDni() {
         return dni;
     }

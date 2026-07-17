@@ -95,7 +95,7 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         }
         CambiarTDocVenta();
         
-        Cliente c = cboUtil.filtrarItem(listaCliente, o->o.getCliente_Id()== venta.getCliente().getCliente_Id());
+        Cliente c = cboUtil.filtrarItem(listaCliente, o->o.getId()== venta.getCliente().getId());
             if(c!=null){cboCliente.setSelectedItem(c);}else
             {cboCliente.setSelectedIndex(0);
             JOptionPane.showMessageDialog(null, "Hubo un error al cargar el cliente");
@@ -112,7 +112,7 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
     
     void GenerarItemInicial(){
         Cliente c = new Cliente();
-        c.setCliente_Id(0);
+        c.setId(0);
         c.setNombre("Seleccione un cliente");
         TipoDocumento td = new TipoDocumento();
         td.setTipoDocumento_Id(4);

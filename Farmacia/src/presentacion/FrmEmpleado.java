@@ -79,7 +79,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
         lista = r.getDatos();
         for (Usuario m : r.getDatos()) {
             tabla.addRow(new Object[]{
-                m.getUsuario_Id(),
+                m.getId(),
                 m.getDni(),
                 m.getNombre(),
                 m.getTelefono(),
@@ -102,7 +102,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
                 ,txtTelefono.getText()
         );
         Respuesta r;
-        if(p.getUsuario_Id()==0){
+        if(p.getId()==0){
             r = obj.guardar(p);
         }else{
             r = obj.actualizar(p);
@@ -386,7 +386,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
 
         Usuario usuario = lista.get(fila);
 
-        ID = usuario.getUsuario_Id();
+        ID = usuario.getId();
         txtDocumento.setText(usuario.getDni());
         txtEmpleado.setText(usuario.getNombre());
         txtTelefono.setText(usuario.getTelefono());
@@ -428,7 +428,7 @@ public class FrmEmpleado extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         obtenerIDxTabla();
-        Usuario _usuario = lista.stream().filter(m -> m.getUsuario_Id()==ID).findFirst().orElse(null);
+        Usuario _usuario = lista.stream().filter(m -> m.getId()==ID).findFirst().orElse(null);
         if(_usuario==null){
             JOptionPane.showMessageDialog(null, "No hay registros seleccionados");
             return;

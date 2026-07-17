@@ -5,6 +5,8 @@
 package logica;
 
 import datos.D_Usuario;
+import modelo.EstadoOperacion;
+import modelo.Respuesta;
 import modelo.Usuario;
 
 /**
@@ -19,10 +21,23 @@ public class L_Login {
         usuarioDAO = new D_Usuario();
     }
 
-    public Usuario iniciarSesion(String usuario,
-                                 String contrasena) {
+    public Respuesta<Usuario> login(String usuario, String clave) {
 
-        return usuarioDAO.validarLogin(usuario, contrasena);
+        if (usuario.trim().isEmpty()) {
+            return new Respuesta<>(
+                    EstadoOperacion.ERROR,
+                    "Ingrese el usuario."
+            );
+        }
+
+        if (clave.trim().isEmpty()) {
+            return new Respuesta<>(
+                    EstadoOperacion.ERROR,
+                    "Ingrese la contraseña."
+            );
+        }
+
+        return usuarioDAO.login(usuario, clave);
     }
     
 }

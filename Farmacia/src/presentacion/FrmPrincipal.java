@@ -40,6 +40,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         jdpMain = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        jmnEmpleado = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jmnClientes = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
@@ -64,6 +65,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         );
 
         jMenu1.setText("Usuarios");
+
+        jmnEmpleado.setText("Empleado");
+        jmnEmpleado.addActionListener(this::jmnEmpleadoActionPerformed);
+        jMenu1.add(jmnEmpleado);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Clientes");
@@ -144,6 +150,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
         AbrirFrm(new FrmClientes());
     }//GEN-LAST:event_jmnClientesActionPerformed
 
+    private void jmnEmpleadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jmnEmpleadoActionPerformed
+        AbrirFrm(new FrmEmpleado());
+    }//GEN-LAST:event_jmnEmpleadoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -178,6 +188,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private javax.swing.JDesktopPane jdpMain;
     private javax.swing.JMenuItem jmnCategoria;
     private javax.swing.JMenuItem jmnClientes;
+    private javax.swing.JMenuItem jmnEmpleado;
     private javax.swing.JMenuItem jmnLaboratorio;
     private javax.swing.JMenuItem jmnMarcas;
     private javax.swing.JMenuItem jmnProductos;

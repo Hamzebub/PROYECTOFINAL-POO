@@ -47,14 +47,6 @@ public class Cliente extends Persona {
         this.Cliente_Id = Cliente_Id;
     }
     
-    public Cliente getCliente(){
-        return this;
-    }
-    
-    public Cliente setCliente(){
-        return this;
-    }
-    
     public TipoDocumento getTipoDocumento() {
         return tipoDocumento;
     }

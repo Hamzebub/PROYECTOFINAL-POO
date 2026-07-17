@@ -338,12 +338,12 @@ public class FrmClientes extends javax.swing.JInternalFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         obtenerIDxTabla();
-        Cliente _producto = lista.stream().filter(m -> m.getCliente_Id()==ID).findFirst().orElse(null);
-        if(_producto==null){
+        Cliente _cliente = lista.stream().filter(m -> m.getCliente_Id()==ID).findFirst().orElse(null);
+        if(_cliente==null){
             JOptionPane.showMessageDialog(null, "No hay registros seleccionados");
             return;
         }
-        LimpiarCampos(_producto);
+        LimpiarCampos(_cliente);
         activarBotones(true);
         txtDocumento.requestFocus();
     }//GEN-LAST:event_btnEditarActionPerformed

@@ -1,5 +1,5 @@
 
-use DB_ProyectoFM
+use DB_ProyectoFM_I
 go
 
 
@@ -490,7 +490,7 @@ BEGIN
 
         IF EXISTS (SELECT Cliente_Id FROM Cliente WHERE Activo=1 AND NumeroDocumento = @NumeroDocumento)
         BEGIN
-            SELECT 0[Respuesta], 'El número de documento ya se encuentra registrado.'[Mensaje],0 [Id]
+            SELECT 0[Respuesta], 'El nï¿½mero de documento ya se encuentra registrado.'[Mensaje],0 [Id]
             RETURN
         END
 
@@ -535,12 +535,12 @@ BEGIN
             SELECT 0[Respuesta],'El cliente no existe.' [Mensaje],0 [Id]
             RETURN
         END
-        -- Verificar que el número de documento no pertenezca a otro cliente
+        -- Verificar que el nï¿½mero de documento no pertenezca a otro cliente
         IF EXISTS (
             SELECT 1 FROM Cliente WHERE NumeroDocumento = @NumeroDocumento AND Cliente_Id <> @Cliente_Id
         )
         BEGIN
-            SELECT 0[Respuesta],'El número de documento ya está registrado.' [Mensaje],0 [Id]
+            SELECT 0[Respuesta],'El nï¿½mero de documento ya estï¿½ registrado.' [Mensaje],0 [Id]
             RETURN
         END
 
@@ -611,6 +611,182 @@ BEGIN
 END
 GO
 
+---======================== SP USUARIO ========================---
+IF (OBJECT_ID('USP_Usuario_Listar') IS NOT NULL)
+BEGIN
+    DROP PROC USP_Usuario_Listar
+END
+GO
+CREATE PROCEDURE USP_Usuario_Listar
+AS
+BEGIN
+    SELECT * FROM Usuario u
+    INNER JOIN TipoDocumento t
+    ON u.TipoDocumento_Id = t.TipoDocumento_Id
+    WHERE u.Activo = 1
+END
+GO
+
+IF (OBJECT_ID('USP_Usuario_Eliminar') IS NOT NULL)
+BEGIN
+    DROP PROCEDURE USP_Usuario_Eliminar
+END
+GO
+CREATE PROCEDURE USP_Usuario_Eliminar
+(
+    @id INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON
+    BEGIN TRY
+
+		IF NOT EXISTS(SELECT Usuario_Id FROM Usuario WHERE Usuario_Id = @id AND Activo = 1)
+		BEGIN
+            SELECT 0[Respuesta], 'El usuario ya se encuentra eliminado o no existe.' [Mensaje],0 [Id]
+            RETURN
+        END
+
+        UPDATE Usuario SET Activo = 0 WHERE Usuario_Id = @id
+
+        SELECT 1[Respuesta], 'Usuario eliminado correctamente.' [Mensaje]
+
+    END TRY
+    BEGIN CATCH
+
+        SELECT 0[Respuesta], ERROR_MESSAGE() [Mensaje],0 [Id]
+
+    END CATCH
+END
+GO
+
+IF (OBJECT_ID('USP_Usuario_Actualizar') IS NOT NULL)
+BEGIN
+    DROP PROCEDURE USP_Usuario_Actualizar
+END
+GO
+CREATE PROCEDURE USP_Usuario_Actualizar
+(
+    @Usuario_Id INT,
+    @TipoDocumento_Id INT,
+    @NumeroDocumento VARCHAR(20),
+    @Nombre VARCHAR(100),
+    @Telefono VARCHAR(20),
+    @Usuario VARCHAR(50),
+    @Clave VARCHAR(255),
+    @Rol VARCHAR(50)
+)
+AS
+BEGIN
+    SET NOCOUNT ON
+    BEGIN TRY
+
+	    IF NOT EXISTS(
+			SELECT Usuario_Id FROM Usuario WHERE Activo=1 AND Usuario_Id = @Usuario_Id
+        )
+        BEGIN
+            SELECT 0[Respuesta],'El Usuario no existe.' [Mensaje],0 [Id]
+            RETURN
+        END
+        -- Verificar que el nÃºmero de documento no pertenezca a otro cliente
+        IF EXISTS (
+            SELECT 1 FROM Usuario WHERE NumeroDocumento = @NumeroDocumento AND Usuario_Id <> @Usuario_Id
+        )
+        BEGIN
+            SELECT 0[Respuesta],'El nÃºmero de documento ya estÃ¡ registrado en otro Usuario.' [Mensaje],0 [Id]
+            RETURN
+        END
+
+        UPDATE Usuario
+        SET
+            TipoDocumento_Id = @TipoDocumento_Id,
+            NumeroDocumento = @NumeroDocumento,
+            Nombre = @Nombre,
+            Telefono = @Telefono,
+            Usuario = @Usuario,
+            Clave = @Clave,
+            Rol = @Rol
+        WHERE Usuario_Id = @Usuario_Id
+
+        SELECT 1[Respuesta], 'Usuario actualizado correctamente.' [Mensaje],@Usuario_Id [Id]
+
+    END TRY
+    BEGIN CATCH
+
+        SELECT 0[Respuesta], ERROR_MESSAGE() [Mensaje],0 [Id]
+
+    END CATCH
+END
+GO
+
+
+IF (OBJECT_ID('USP_Usuario_Guardar') IS NOT NULL)
+BEGIN
+    DROP PROCEDURE USP_Usuario_Guardar
+END
+GO
+CREATE PROCEDURE USP_Usuario_Guardar
+(
+    @TipoDocumento_Id INT,
+    @NumeroDocumento VARCHAR(20),
+    @Nombre VARCHAR(100),
+    @Telefono VARCHAR(20),
+    @Usuario VARCHAR(50),
+    @Clave VARCHAR(255),
+    @Rol VARCHAR(50)
+)
+AS
+BEGIN
+    SET NOCOUNT ON
+    BEGIN TRY
+
+        -- Validar documento
+            IF EXISTS( SELECT Usuario_Id FROM Usuario WHERE Activo = 1 AND NumeroDocumento = @NumeroDocumento )
+            BEGIN
+                SELECT 0 [Respuesta], 'El nÃºmero de documento ya se encuentra registrado.' [Mensaje], 0 [Id]
+                RETURN
+            END
+
+            -- Validar usuario
+            IF EXISTS( SELECT Usuario_Id FROM Usuario WHERE Activo = 1 AND Usuario = @Usuario )
+            BEGIN
+                SELECT 0 [Respuesta], 'El nombre de usuario ya se encuentra registrado.' [Mensaje], 0 [Id]
+                RETURN
+            END
+
+        INSERT INTO Usuario(TipoDocumento_Id,NumeroDocumento,Nombre,Telefono,Usuario,Clave,Rol,Activo)
+        VALUES(@TipoDocumento_Id,@NumeroDocumento,@Nombre,@Telefono,@Usuario,@Clave,@Rol,1)
+
+		DECLARE @id int = @@identity
+        SELECT 1[Respuesta],'Usuario registrado correctamente.'[Mensaje],@id [Id]
+
+    END TRY
+    BEGIN CATCH
+
+		SELECT 0[Respuesta],ERROR_MESSAGE() [Mensaje],0 [Id]
+
+    END CATCH
+END
+GO
+
+--UPDATE Usuario SET Activo = 1 WHERE Usuario_Id = 2
+
+
+IF(OBJECT_ID('sp_LoginUsuario') IS NOT NULL)
+BEGIN
+    DROP PROC sp_LoginUsuario
+END
+GO
+
+CREATE PROCEDURE sp_LoginUsuario
+    @Usuario VARCHAR(50),
+    @Clave VARCHAR(255)
+AS
+BEGIN
+    SELECT U.Usuario_Id,U.NumeroDocumento,U.Nombre,U.Usuario,U.Clave,U.Rol,U.Activo 
+    FROM Usuario U WHERE UPPER(U.Usuario) = UPPER(@Usuario) AND U.Clave = @Clave AND U.Activo = 1
+END
+GO
 
 
 --SELECT * FROM VENTA
@@ -917,4 +1093,4 @@ BEGIN
 END
 GO
 
-USP_VentaDetalle_ListarxID 2
+--USP_VentaDetalle_ListarxID 2

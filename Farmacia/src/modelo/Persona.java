@@ -35,6 +35,20 @@ public abstract class Persona {
         return telefono;
     }
 
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+    
+    
+
     public abstract void mostrarInfo();
     
 }

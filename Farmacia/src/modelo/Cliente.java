@@ -72,6 +72,13 @@ public class Cliente extends Persona {
     }
 
     @Override
+    public String toString() {
+        return super.nombre;
+    }
+    
+    
+
+    @Override
     public void mostrarInfo() {
         System.out.println(nombre);
     }

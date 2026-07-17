@@ -1,19 +1,24 @@
 package presentacion;
 
 import java.awt.event.ItemEvent;
+import java.beans.PropertyVetoException;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import logica.L_Cliente;
 import logica.L_Producto;
 import logica.L_TipoDocumentoVenta;
+import logica.L_Venta;
+import logica.L_VentaDetalle;
+import modelo.Cliente;
 import modelo.EstadoOperacion;
 import modelo.Producto;
 import modelo.Respuesta;
+import modelo.TipoDocumento;
 import modelo.TipoDocumentoVenta;
 import modelo.Venta;
 import modelo.VentaDetalle;
@@ -29,13 +34,22 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
     private List<Producto> lista;
     private List<Producto> listaFiltro;
     private List<VentaDetalle> listaDetalle;
+    private List<Cliente> listaCliente;
+    private L_VentaDetalle objVDetalle;
     private L_Producto obj;
+    private L_Venta objVenta;
     private Producto p;
     private int ID=0;
-    public FrmVentaGenerar(Venta venta) {
-        initComponents();
-        obj = new L_Producto();
+    private FrmVentas frmV;
         
+    public FrmVentaGenerar(Venta venta,FrmVentas _v) {
+        initComponents();
+        frmV= _v;
+        obj = new L_Producto();
+        objVenta = new L_Venta();
+        objVDetalle = new L_VentaDetalle();
+        listaCliente = new L_Cliente().listar().getDatos();
+        GenerarItemInicial();
         
         cboUtil.llenarCombo(cboTDocumentoVenta, L_TipoDocumentoVenta.getInstancia().obtenerListar());
         cargarModeloTabla();
@@ -43,6 +57,7 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         asignarEventoTabla();
         
         cargarModeloTablaDetalle();
+        
         if(venta ==null){
             listaDetalle= new ArrayList<>();
             String fechaHora= LocalDateTime.now()
@@ -50,8 +65,9 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
             txtFecha.setText(fechaHora);
             txtTotal.setText("0");
         }
-        setHabilitarCajas();
         cargarDatosModeloDetalle();
+        setHabilitarCajas();
+        
         
         CambiarTDocVenta();
         
@@ -60,6 +76,31 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
     setMaximizable(true);   // Maximizar
     setResizable(true);     // Redimensionar
     
+    }
+    
+    void GenerarItemInicial(){
+        Cliente c = new Cliente();
+        c.setCliente_Id(0);
+        c.setNombre("Seleccione un cliente");
+        TipoDocumento td = new TipoDocumento();
+        td.setTipoDocumento_Id(4);
+        c.setTipoDocumento(td);
+        listaCliente.add(ID, c);
+    }
+    
+    void CargarCliente(){
+        TipoDocumentoVenta td = (TipoDocumentoVenta)cboTDocumentoVenta.getSelectedItem();
+        List<Cliente> listaCFiltro;
+        //factura 2
+        //ruc - 4
+        if(td.getTipoDocumentoVenta_Id()==2){
+            listaCFiltro = cboUtil.filtrar(listaCliente, c-> c.getTipoDocumento().getTipoDocumento_Id()==4);
+        }else{
+            listaCFiltro = cboUtil.filtrar(listaCliente, c-> c.getTipoDocumento().getTipoDocumento_Id()!=4);
+        }
+        System.out.println(listaCliente.size());
+        System.out.println(listaCFiltro.size());
+        cboUtil.llenarCombo(cboCliente, listaCFiltro);
     }
     
     void setHabilitarCajas(){
@@ -183,6 +224,8 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
             txtSerie.setText(td.getIndicador());
         }
         
+        CargarCliente();
+        
     }
     
     void BuscarProductos(){
@@ -199,6 +242,47 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         txtTotal.setText(total.toString());
     
     }
+    
+    
+    private void Guardar(){
+        Venta v = new Venta();
+        v.setSerie(txtSerie.getText());
+        v.setTipoDocumentoVenta((TipoDocumentoVenta)cboTDocumentoVenta.getSelectedItem());
+        v.setCliente((Cliente)cboCliente.getSelectedItem());
+        v.setTotal(new BigDecimal(txtTotal.getText()));
+        v.setVentaDetalle(listaDetalle);
+        
+        DateTimeFormatter formateador = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:m");
+        LocalDateTime fechaCompleta = LocalDateTime.parse(txtFecha.getText(), formateador);
+        v.setFechaCompleta(fechaCompleta);
+
+        Respuesta r= new Respuesta();
+        
+        if(v.getVenta_Id()==0){
+            r = objVenta.guardar(v);
+        }else{
+            r = objVenta.actualizar(v);
+        }
+        if(r.esCorrecto()){
+            for (VentaDetalle item : listaDetalle) {
+                item.setVenta_Id(r.getId());
+                objVDetalle.guardar(item);
+            }
+        }
+        
+        JOptionPane.showMessageDialog(null, r.getMensaje());
+        if(r.esCorrecto()){
+            try{
+             frmV.Listar();
+             this.setClosed(true);
+            }catch(PropertyVetoException e){
+                System.out.println(e.getMessage());
+            }
+            
+        }
+        
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -294,6 +378,8 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         jLabel8.setText("Cliente:");
 
         cboCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cboCliente.setMinimumSize(new java.awt.Dimension(172, 22));
+        cboCliente.setPreferredSize(new java.awt.Dimension(172, 22));
 
         jLabel9.setText("Total:");
 
@@ -308,8 +394,8 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(cboTDocumentoVenta, 0, 119, Short.MAX_VALUE)
-                    .addComponent(cboCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cboTDocumentoVenta, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cboCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -328,7 +414,7 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,6 +441,7 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         btnEliminar.setText("Eliminar");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnCancelar.setText("Cancelar");
 
@@ -456,6 +543,10 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         
         
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        Guardar();
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

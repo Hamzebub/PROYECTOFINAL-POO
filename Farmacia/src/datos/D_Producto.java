@@ -12,7 +12,7 @@ import modelo.Laboratorio;
 import modelo.Marca;
 
 public class D_Producto extends RepositorioBase 
-        implements ICRUD<Producto,Producto>{
+        implements ICRUD_Producto<Producto,Producto>{
 
     @Override
     public Respuesta<Producto> guardar(Producto producto) {
@@ -207,6 +207,48 @@ public class D_Producto extends RepositorioBase
             
             resultado.setDatos(lst);
             resultado.setEstado(EstadoOperacion.EXITO);
+
+        } catch (SQLException e) {
+
+            resultado.setEstado(EstadoOperacion.ERROR);
+            resultado.setMensaje(e.getMessage());
+
+        } finally {
+
+            cerrar(rs, cs, cn);
+        }
+
+        return resultado;
+    }
+
+    @Override
+    public Respuesta<Producto> actualizarSTOCK(Producto entidad) {
+        Respuesta<Producto> resultado = new Respuesta<>();
+
+        Connection cn = null;
+        CallableStatement cs = null;
+        ResultSet rs = null;
+
+        try {
+
+            cn = getConexion();
+
+            cs = cn.prepareCall("{CALL USP_Producto_ActualizarStock(?,?)}");
+            int fila=1;
+            cs.setInt(fila++,entidad.getProducto_Id());
+            cs.setInt(fila++,entidad.getStock());
+
+            rs = cs.executeQuery();
+
+            if (rs.next()) {
+
+                resultado.setEstado(
+                        EstadoOperacion.fromCodigo(
+                                rs.getInt("Respuesta")));
+
+                resultado.setMensaje(
+                        rs.getString("Mensaje"));
+            }
 
         } catch (SQLException e) {
 

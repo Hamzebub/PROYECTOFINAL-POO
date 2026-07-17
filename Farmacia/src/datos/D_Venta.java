@@ -143,7 +143,7 @@ public class D_Venta extends RepositorioBase
 
             cn = getConexion();
 
-            cs = cn.prepareCall("{CALL USP_Venta_Eliminar(?)}");
+            cs = cn.prepareCall("{CALL USP_Venta_Anular(?)}");
 
             cs.setInt(1,id);
 

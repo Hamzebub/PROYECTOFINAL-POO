@@ -1,7 +1,8 @@
 package logica;
 
 import datos.D_Producto;
-import datos.ICRUD;
+
+import datos.ICRUD_Producto;
 import java.util.List;
 import modelo.EstadoOperacion;
 import modelo.Producto;
@@ -12,7 +13,7 @@ import modelo.Respuesta;
  * @author delac
  */
 public class L_Producto {
-   private final ICRUD<Producto,Producto> obj;
+   private final ICRUD_Producto<Producto,Producto> obj;
     
     public L_Producto() {
         this.obj = new D_Producto();
@@ -74,6 +75,22 @@ public class L_Producto {
     
     public Respuesta<List<Producto>> listar() {
         return obj.listar();
+    }
+    
+    public Respuesta<Producto> actualizarSTOCK(Producto entidad){
+        return obj.actualizarSTOCK(entidad);
+    
+    }
+    
+    public Respuesta<Producto> actualizarSTOCK(List<Producto> entidad){
+        Respuesta<Producto> re = new Respuesta<>();
+        re.setEstado(EstadoOperacion.EXITO);
+        for(Producto p : entidad){
+            obj.actualizarSTOCK(p);
+        }
+        
+        return re;
+    
     }
      
 }

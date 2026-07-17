@@ -36,6 +36,7 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
     private List<VentaDetalle> listaDetalle;
     private List<Cliente> listaCliente;
     private L_VentaDetalle objVDetalle;
+    private List<TipoDocumentoVenta> listaDVenta;
     private L_Producto obj;
     private L_Venta objVenta;
     private Producto p;
@@ -48,15 +49,18 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         obj = new L_Producto();
         objVenta = new L_Venta();
         objVDetalle = new L_VentaDetalle();
+        
         listaCliente = new L_Cliente().listar().getDatos();
         GenerarItemInicial();
         
-        cboUtil.llenarCombo(cboTDocumentoVenta, L_TipoDocumentoVenta.getInstancia().obtenerListar());
+        listaDVenta=L_TipoDocumentoVenta.getInstancia().obtenerListar();
+        cboUtil.llenarCombo(cboTDocumentoVenta,listaDVenta );
         cargarModeloTabla();
         cargarTablaProductos();
         asignarEventoTabla();
         
         cargarModeloTablaDetalle();
+        setHabilitarCajas();
         
         if(venta ==null){
             listaDetalle= new ArrayList<>();
@@ -64,18 +68,46 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         .format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm"));
             txtFecha.setText(fechaHora);
             txtTotal.setText("0");
+            CambiarTDocVenta();
+            
+        }else{
+            CargarDatosVenta(venta);
         }
         cargarDatosModeloDetalle();
-        setHabilitarCajas();
-        
-        
-        CambiarTDocVenta();
-        
+                
         setClosable(true);      // Permite cerrar
     setIconifiable(true);   // Minimizar
     setMaximizable(true);   // Maximizar
     setResizable(true);     // Redimensionar
     
+    }
+    
+    void CargarDatosVenta(Venta venta){
+        listaDetalle= venta.getVentaDetalle();
+        txtCorrelativo.setText(venta.getCorrelativo()+"");
+        txtSerie.setText(venta.getSerie());
+        txtTotal.setText(venta.getTotal().toString());
+        txtFecha.setText(venta.getFechaCompleta().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));
+        TipoDocumentoVenta tdv = cboUtil.filtrarItem(listaDVenta, o->o.getTipoDocumentoVenta_Id()== venta.getTipoDocumentoVenta().getTipoDocumentoVenta_Id());
+        if(tdv!=null){cboTDocumentoVenta.setSelectedItem(tdv);}
+        else{cboTDocumentoVenta.setSelectedIndex(0);
+            JOptionPane.showMessageDialog(null, "Hubo un error al cargar el Tipo de documento de venta");
+        }
+        CambiarTDocVenta();
+        
+        Cliente c = cboUtil.filtrarItem(listaCliente, o->o.getCliente_Id()== venta.getCliente().getCliente_Id());
+            if(c!=null){cboCliente.setSelectedItem(c);}else
+            {cboCliente.setSelectedIndex(0);
+            JOptionPane.showMessageDialog(null, "Hubo un error al cargar el cliente");
+            }
+            
+        btnAgregar.setVisible(false);
+        btnGuardar.setVisible(false);
+        btnEliminar.setVisible(false);
+        txtDetalle.setEnabled(false);
+        txtCantidad.setEnabled(false);
+        btnBuscar.setVisible(false);
+        txtBuscar.setEnabled(false);
     }
     
     void GenerarItemInicial(){
@@ -113,8 +145,6 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
     
     void asignarEventoTabla(){
         tblProducto.getSelectionModel().addListSelectionListener(e -> {
-            System.out.println("evento tabla");
-
         if (!e.getValueIsAdjusting()) {
 
             int fila = tblProducto.getSelectedRow();
@@ -267,11 +297,16 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
             for (VentaDetalle item : listaDetalle) {
                 item.setVenta_Id(r.getId());
                 objVDetalle.guardar(item);
+                Producto p = item.getProducto();
+                p.setStock(item.getCantidad()*-1);
+                obj.actualizarSTOCK(p);
             }
         }
         
         JOptionPane.showMessageDialog(null, r.getMensaje());
         if(r.esCorrecto()){
+            
+            
             try{
              frmV.Listar();
              this.setClosed(true);
@@ -282,6 +317,8 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         }
         
     }
+    
+    
     
 
     /**
@@ -439,11 +476,13 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
         );
 
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(this::btnCancelarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -528,8 +567,14 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         VentaDetalle _detalle = new VentaDetalle();
-        _detalle.setProducto(p);
         int cantidad = Integer.parseInt(txtCantidad.getText());
+        if(cantidad>p.getStock()){
+            JOptionPane.showMessageDialog(null, "No hay stock suficiente para realizar la venta del producto");
+            return;
+        
+        }
+        _detalle.setProducto(p);
+        
         BigDecimal punitario = BigDecimal.valueOf(p.getPrecio());
         BigDecimal subtotal = punitario.multiply(new BigDecimal(cantidad));
         _detalle.setCantidad(cantidad);
@@ -547,6 +592,29 @@ public class FrmVentaGenerar extends javax.swing.JInternalFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Guardar();
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        try{
+             this.setClosed(true);
+            }catch(PropertyVetoException e){
+                System.out.println(e.getMessage());
+            }
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int filaVisual = tblDatos.getSelectedRow();
+        if (filaVisual == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.");
+            return;
+        }
+        
+        int filaModelo = tblDatos.convertRowIndexToModel(filaVisual);
+            listaDetalle.remove(filaModelo);
+            //DefaultTableModel mdl = (DefaultTableModel) tblDatos.getModel();
+            modeloDetalle.removeRow(filaModelo);
+            calcularTotal();
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

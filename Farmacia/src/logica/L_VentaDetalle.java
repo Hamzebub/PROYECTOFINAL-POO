@@ -1,7 +1,7 @@
 package logica;
 
 import datos.D_VentaDetalle;
-import datos.ICRUD;
+import datos.ICRUD_VentaDetalle;
 import java.util.List;
 import modelo.EstadoOperacion;
 import modelo.Respuesta;
@@ -12,7 +12,7 @@ import modelo.VentaDetalle;
  * @author Migue
  */
 public class L_VentaDetalle {
-    private final ICRUD<VentaDetalle,VentaDetalle> obj;
+    private final ICRUD_VentaDetalle<VentaDetalle,VentaDetalle> obj;
     
     public L_VentaDetalle() {
         this.obj = new D_VentaDetalle();
@@ -57,6 +57,10 @@ public class L_VentaDetalle {
     
     public Respuesta<List<VentaDetalle>> listar() {
         return obj.listar();
+    }
+    
+    public Respuesta<List<VentaDetalle>> listarxVentaID(int id) {
+        return obj.listarxVentaID(id);
     }
     
 }

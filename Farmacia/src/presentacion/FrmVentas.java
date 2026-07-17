@@ -5,10 +5,14 @@ import java.util.List;
 import javax.swing.JDesktopPane;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import logica.L_Producto;
 import logica.L_Venta;
+import logica.L_VentaDetalle;
 import modelo.EstadoOperacion;
+import modelo.Producto;
 import modelo.Respuesta;
 import modelo.Venta;
+import modelo.VentaDetalle;
 
 /**
  *
@@ -19,16 +23,21 @@ public class FrmVentas extends javax.swing.JInternalFrame {
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(FrmVentas.class.getName());
     private JDesktopPane jdpMain;
     private L_Venta obj;
+    private L_VentaDetalle objDetalle;
+    private L_Producto objProducto;
     private DefaultTableModel modelo;
     private List<Venta> lista= new ArrayList<Venta>();
     private List<Venta> listaFiltro= new ArrayList<Venta>();
+    private int ID=0;
 
     public FrmVentas(JDesktopPane pane) {
         initComponents();
         this.jdpMain= pane;
         obj = new L_Venta();
+        objDetalle= new L_VentaDetalle();
+        objProducto = new L_Producto();
         cargarModeloTabla();
-        cargarTablaProductos();
+        cargarTabla();
         setClosable(true);      // Permite cerrar
     setIconifiable(true);   // Minimizar
     setMaximizable(true);   // Maximizar
@@ -51,7 +60,7 @@ public class FrmVentas extends javax.swing.JInternalFrame {
         
     }
     
-    private void cargarTablaProductos() {
+    private void cargarTabla() {
     Respuesta<List<Venta>> r = obj.listar();
     
     
@@ -82,7 +91,13 @@ public class FrmVentas extends javax.swing.JInternalFrame {
     }
     
     public void Listar(){
-        cargarTablaProductos();
+        cargarTabla();
+    }
+    
+    private void obtenerIDxTabla(){
+        
+        int fila= tblDatos.getSelectedRow();
+        ID =Integer.parseInt(tblDatos.getValueAt(fila, 0).toString());
     }
 
     /**
@@ -97,6 +112,11 @@ public class FrmVentas extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDatos = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
+        btnVer = new javax.swing.JButton();
+        btnAnular = new javax.swing.JButton();
+
+        setTitle("Ventas");
+        setToolTipText("");
 
         tblDatos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -114,6 +134,12 @@ public class FrmVentas extends javax.swing.JInternalFrame {
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(this::btnNuevoActionPerformed);
 
+        btnVer.setText("Ver");
+        btnVer.addActionListener(this::btnVerActionPerformed);
+
+        btnAnular.setText("Anular");
+        btnAnular.addActionListener(this::btnAnularActionPerformed);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -124,6 +150,10 @@ public class FrmVentas extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 892, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNuevo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnVer)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAnular)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -131,7 +161,10 @@ public class FrmVentas extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(33, 33, 33)
-                .addComponent(btnNuevo)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnNuevo)
+                    .addComponent(btnVer)
+                    .addComponent(btnAnular))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                 .addContainerGap())
@@ -152,13 +185,55 @@ public class FrmVentas extends javax.swing.JInternalFrame {
         
     }//GEN-LAST:event_btnNuevoActionPerformed
 
+    private void btnAnularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnularActionPerformed
+        obtenerIDxTabla();
+        if(ID==0){
+            JOptionPane.showMessageDialog(null, "No hay registros seleccionados");
+            return;
+        }
+        if( JOptionPane.showConfirmDialog(null, "Desea eliminar registro?")!=JOptionPane.YES_OPTION){
+            return;
+        }
+        
+        Respuesta r = obj.eliminar(ID);
+        JOptionPane.showMessageDialog(null, r.getMensaje());
+        if(r.esCorrecto()){
+            
+            List<VentaDetalle> lstD = objDetalle.listarxVentaID(ID).getDatos();
+            List<Producto> lstP =new ArrayList<>();
+            for(VentaDetalle v : lstD){
+                Producto p = v.getProducto();
+                p.setStock(v.getCantidad());
+                lstP.add(p);
+            }
+            objProducto.actualizarSTOCK(lstP);
+            cargarTabla();
+            ID=0;
+        }
+    }//GEN-LAST:event_btnAnularActionPerformed
+
+    private void btnVerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerActionPerformed
+        obtenerIDxTabla();
+        Venta venta = lista.stream().filter(m -> m.getVenta_Id()==ID).findFirst().orElse(null);
+        venta.setVentaDetalle(objDetalle.listarxVentaID(venta.getVenta_Id()).getDatos());
+        FrmVentaGenerar frm = new FrmVentaGenerar(venta,this);
+        jdpMain.add(frm);
+        frm.setLocation(
+        (jdpMain.getWidth() - frm.getWidth()) / 2,
+        (jdpMain.getHeight() - frm.getHeight()) / 2);
+        frm.setVisible(true);
+        
+    }//GEN-LAST:event_btnVerActionPerformed
+
     /**
      * @param args the command line arguments
      */
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnular;
     private javax.swing.JButton btnNuevo;
+    private javax.swing.JButton btnVer;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tblDatos;
     // End of variables declaration//GEN-END:variables

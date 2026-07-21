@@ -16,7 +16,7 @@ INSERT INTO TipoDocumento (TipoDocumento_Id,DocumentoDetalle,Abreviatura,Defecto
 (1,'OTROS TIPOS DE DOCUMENTOS','OTROS',0)
 ,(2,'DOCUMENTO NACIONAL DE IDENTIDAD (DNI)','DNI',1)
 ,(3,'CARNET DE EXTRANJERIA','C.EXT.',0)
-,(4,'REGISTRO ÚNICO DE CONTRIBUYENTES','RUC',0)
+,(4,'REGISTRO ï¿½NICO DE CONTRIBUYENTES','RUC',0)
 ,(5,'PASAPORTE','PASAPORTE',0)
 go
 
@@ -109,8 +109,8 @@ Activo int
 
 CREATE TABLE VentaDetalle(
 VentaDetalle_Id int IDENTITY PRIMARY KEY, 
-Venta_Id int,
-Producto_Id int, 
+Venta_Id int references Venta,
+Producto_Id int references Producto, 
 Cantidad int,
 PrecioUnitario decimal(9,2),
 Subtotal decimal(9,2),

@@ -10,7 +10,6 @@ El presente sistema fue elaborado para cubrir la necesidad de gestionar clientes
 # PASOS PARA CONFIGURAR
 ## CONFIGURAR BASE DE DATOS EN SQL SERVER
 En la ruta "src\Script" o "Farmacia\src\Script" se ubican 2 archivos con extension sql. Ejecutar en el siguiente orden: 
-
 1."BD_pr_farmacia.sql" - contiene la creacion y tablas de la base de datos. El nombre de la base de datos se encuentra por defecto como "DB_ProyectoFM".
 2."BD_FR_SP.sql" - contiene los store procedures necesarios para el funcionamiento correcto del sistema.
 

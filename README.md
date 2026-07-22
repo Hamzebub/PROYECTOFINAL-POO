@@ -21,14 +21,14 @@ En la ruta "src\Script" o "Farmacia\src\Script" se ubican 2 archivos con extensi
 IMPORTANTE: De no existir el archivo "db.properties", el sistema no funcionara debido a que le faltara la cadena de conexion a la base de datos.
 
 ## COMPILADO
-En la ruta "lib" o "Farmacia\lib", se encontraran 2 archivos .jar: 
-1."jcalendar-1.4.jar" -> utilizado para añadir un input de tipo calendario para seleccionar fechas.
-2."mssql-jdbc-13.4.0.jre11.jar" -> utilizado para realizar la conexion jdbc hacia SQL SERVER.
+En la ruta "lib" o "Farmacia\lib", se encontraran 2 archivos .jar:  
+1."jcalendar-1.4.jar" -> utilizado para añadir un input de tipo calendario para seleccionar fechas.  
+2."mssql-jdbc-13.4.0.jre11.jar" -> utilizado para realizar la conexion jdbc hacia SQL SERVER.  
 Si al momento de compilar se genera un error, validar que la referencia a esos 2 archivos exista o en su defecto, regularizarlo en el IDE Netbeans a travez de la carpeta "Libraries".
 
 ## INICIO DE SESION
-El usuario por defecto es: "Admin"
-La clave por defecto es "1234".
+El usuario por defecto es: "Admin"  
+La clave por defecto es "1234".  
 Los parametros anteriormente mencionados son los necesarios para ingresar al sistema una vez iniciado.
 
 

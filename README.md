@@ -19,6 +19,7 @@ En la ruta "src\Script" o "Farmacia\src\Script" se ubican 2 archivos con extensi
 3.Abrir el archivo con un block de notas y modificar la cadena de conexion: nombre de la instancia del sql o dejarlo en localhost, cambiar nombre de bd en caso hayan modificado a la hora de ejecutar la base de datos, cambiar el usuario y clave del inicio de sesion de su sql server.  
 <img width="1463" height="136" alt="image" src="https://github.com/user-attachments/assets/10e316ea-8655-43c7-ad9c-056c237c0300" />
 IMPORTANTE: De no existir el archivo "db.properties", el sistema no funcionara debido a que le faltara la cadena de conexion a la base de datos.
+<img width="1160" height="705" alt="image" src="https://github.com/user-attachments/assets/02de7b8c-cecf-4b52-8a27-185de65ef55d" />
 
 ## COMPILADO
 En la ruta "lib" o "Farmacia\lib", se encontraran 2 archivos .jar:  
